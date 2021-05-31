@@ -54,8 +54,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
          // PUBLIC ROUTES
          .antMatchers(
-            "/",
-            "/login"
+                 "/",
+                 "/login",
+                 "/api/images/**"
          );
    }
 
@@ -101,6 +102,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
          .antMatchers("/auth/users/**").hasAuthority("EDIT_USER")
 
          // SERVICES ROUTES
+        .antMatchers(HttpMethod.GET, "/api/customers").hasAuthority("VIEW_CUSTOMER")
+        .antMatchers(HttpMethod.GET, "/api/customers/**").hasAuthority("VIEW_CUSTOMER")
+        .antMatchers(HttpMethod.POST, "/api/customers").hasAuthority("EDIT_CUSTOMER")
+        .antMatchers(HttpMethod.PUT, "/api/customers/**").hasAuthority("EDIT_CUSTOMER")
+        .antMatchers(HttpMethod.DELETE, "/api/customers/**").hasAuthority("EDIT_CUSTOMER")
+
+        .antMatchers(HttpMethod.GET, "/api/details/**").hasAuthority("VIEW_CUSTOMER")
+        .antMatchers(HttpMethod.PUT, "/api/details/**").hasAuthority("EDIT_CUSTOMER")
+
+        .antMatchers(HttpMethod.POST, "/api/images").hasAuthority("EDIT_CUSTOMER")
 
 
          // THE REST OF REQUESTS

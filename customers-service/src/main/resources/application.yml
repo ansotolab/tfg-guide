@@ -1,0 +1,29 @@
+server:
+  port: 8200
+
+spring:
+  application:
+    name: customers-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_customer?allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: password
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 25MB
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+  properties:
+    hibernate:
+      dialect: org.hibernate.dialect.MySQL8Dialect
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
