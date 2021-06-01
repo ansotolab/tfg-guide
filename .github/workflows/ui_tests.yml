@@ -1,0 +1,30 @@
+name: UI E2E Tests
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          build: npm run build
+          start: npm run serve -- --port 8081
+          wait-on: http://localhost:8081/
+          config_file: cypress.json
+          spec: "tests/e2e/**/*"
+          working-directory: ./ui
+          browser: chrome
