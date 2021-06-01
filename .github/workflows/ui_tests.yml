@@ -22,4 +22,4 @@ jobs:
           wait-on: http://localhost:8080/
           config_file: cypress.json
           spec: "tests/e2e/**/*"
-          working-directory: ./vue-typescript-main
+          working-directory: ./ui
