@@ -22,5 +22,9 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           build: npm run build
-          start: npm start
+          start: npm run serve -- --port 8081
+          wait-on: http://localhost:8081/
+          config_file: cypress.json
+          spec: "tests/e2e/**/*"
           working-directory: ./ui
+          browser: chrome

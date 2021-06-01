@@ -5,10 +5,27 @@ describe('Login', () => {
 
     // Falseamos las respuestas del servidor
     cy.server()
-    cy.route('http://localhost:8762/auth/login', {
-      id_token: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJFRElUX0NVU1RPTUVSLEVESVRfVVNFUixST0xFX0FETUlOLFJPTEVfVVNFUixWSUVXX0NVU1RPTUVSIiwiZXhwIjoxNjIyNjIxODU3fQ.lHwb626CESyHx91hRTKi6yQvRVbZKbGfkp2IiE-LU5ESRanhB2o_rw-Ksz1AmtraH-DFMOZHIGzc_QTwriFbIQ'
+    cy.route('POST', '**/auth/login', {
+      "id_token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJFRElUX0NVU1RPTUVSLEVESVRfVVNFUixST0xFX0FETUlOLFJPTEVfVVNFUixWSUVXX0NVU1RPTUVSIiwiZXhwIjoxNjIyNjIxODU3fQ.lHwb626CESyHx91hRTKi6yQvRVbZKbGfkp2IiE-LU5ESRanhB2o_rw-Ksz1AmtraH-DFMOZHIGzc_QTwriFbIQ"
     })
-    cy.route('http://localhost:8762/api/customers', [
+    cy.route('GET', '**/auth/user', {
+          "id": 1,
+          "username": "user",
+          "password": "password",
+          "firstname": "user",
+          "lastname": "user",
+          "email": "user@email.com",
+          "activated": true,
+          "authorities": [
+            {
+              "name": "ROLE_USER"
+            },
+            {
+              "name": "VIEW_CUSTOMER"
+            }
+          ]
+    })
+    cy.route('GET', '**/api/customers', [
       {
           "id": 1,
           "cif": "A123456789",
@@ -26,7 +43,7 @@ describe('Login', () => {
   ])
 
     // Comprobamos que al ir al home nos redirige al login
-    cy.visit('/')
+    cy.visit('http://localhost:8081/')
     cy.contains('body', 'Inicio sesión')
 
     // Insertamos los credenciales del usuario
